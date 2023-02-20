@@ -6,3 +6,25 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Relayer {
+  ID String @id
+  etherBalance String
+  transactions Transaction[]
+}
+
+model Transaction {
+  ID String @id
+  txHash String @unique
+  relayer Relayer? @relation(fields: [relayerId], references: [ID])
+  relayerId String?
+  to String
+  maxFeePerGas String?
+  maxPriorityFeePerGas String?
+  gasPrice String?
+  data String?
+  nonce Int?
+  block Int?
+  status String @default("PENDING")
+  retryCount Int @default(0)
+}
