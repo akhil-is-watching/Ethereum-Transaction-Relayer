@@ -8,7 +8,7 @@ export class CacheService implements ICacheService {
 
 
     async initialize(): Promise<void> {
-        this.client = redis.createClient({ url: config.relayer.redis_url });
+        this.client = redis.createClient({ url: config.server.redis_url });
         await this.client.connect();
     }
 
